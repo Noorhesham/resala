@@ -14,7 +14,7 @@ import { columns } from "./columns";
 const page = async () => {
   await connect();
   const certificates = await Certificate.find({}).populate("course").lean();
-  const res = await getCourses(1, "", 50);
+  const res = await getCourses(1, "");
   console.log(res);
   return (
     <MaxWidthWrapper className="flex flex-col mt-5">

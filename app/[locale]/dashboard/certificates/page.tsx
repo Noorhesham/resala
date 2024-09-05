@@ -10,6 +10,7 @@ import CreateCertificateForm from "@/app/components/CertificateCreation";
 import { DataTable } from "@/app/components/DataTable";
 import { deleteCertificate, getCourses } from "@/app/actions/actions";
 import { columns } from "./columns";
+export const dynamic = "force-dynamic";
 
 const page = async () => {
   await connect();

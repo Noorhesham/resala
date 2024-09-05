@@ -4,6 +4,7 @@ import MaxWidthWrapper from "@/app/components/MaxWidthWrapper";
 import { Comment } from "@/app/models/Comment";
 import connect from "@/lib/clientPromise";
 import { commentColumns } from "./[id]/columns";
+export const dynamic = "force-dynamic";
 
 const page = async () => {
   await connect();

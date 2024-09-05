@@ -7,6 +7,7 @@ import { categoryColumns } from "../course/[id]/columns";
 import CreateCategoryForm from "@/app/components/CreateCategory";
 import { Button } from "@/components/ui/button";
 import CustomDialog from "@/app/components/CustomDialog";
+export const dynamic = "force-dynamic";
 
 const page = async () => {
   await connect();

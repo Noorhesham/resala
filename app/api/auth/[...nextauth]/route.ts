@@ -15,7 +15,7 @@ export const authOptions = {
       },
       async authorize(credentials) {
         if (!credentials) throw new Error("No credentials provided");
-        connect();
+       await  connect();
         const user = await User.findOne({ email: credentials.email }).select("+password");
 
         if (!user) {

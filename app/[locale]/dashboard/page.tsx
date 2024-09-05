@@ -8,10 +8,12 @@ import { deleteCourse } from "../../actions/actions";
 import { columns } from "./(start)/columns";
 import CreateCourseForm from "../../components/CreateCourse";
 import MaxWidthWrapper from "../../components/MaxWidthWrapper";
+import { unstable_setRequestLocale } from "next-intl/server";
 
-const page = async () => {
+const page = async ({ params: { locale } }: { params: { locale: string } }) => {
   await connect();
   const courses = await Course.find({}).lean();
+  unstable_setRequestLocale(locale);
 
   return (
     <MaxWidthWrapper className="flex flex-col mt-5">

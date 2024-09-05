@@ -25,7 +25,9 @@ export async function middleware(req: NextRequest) {
     url.pathname = "/login";
     return NextResponse.redirect(url);
   }
-  return localeMiddleware(req);
+  if (!req.url.includes("/api")) {
+    return localeMiddleware(req);
+  }
 }
 export const config = {
   // Match only internationalized pathnames

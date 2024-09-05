@@ -10,9 +10,10 @@ const nextConfig = {
         hostname: "**",
       },
     ],
-  },typescript:{
-    ignoreBuildErrors: true
-  }
+  },
+  typescript: {
+    ignoreBuildErrors: true,
+  },
 };
 
 export default withNextIntl(nextConfig);

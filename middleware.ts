@@ -10,6 +10,7 @@ const localeMiddleware = createMiddleware({
   // Used when no locale matches
   defaultLocale: "en",
 });
+
 export async function middleware(req: NextRequest) {
   const url = req.nextUrl.clone();
   const session = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });

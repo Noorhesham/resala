@@ -100,7 +100,7 @@ export const signup = async (data: any) => {
     });
     const userObj = JSON.parse(JSON.stringify(newUser));
     return { success: "User created successfully", data: userObj };
-  } catch (error) {
+  } catch (error: any) {
     // Handle potential errors
     console.log(error);
     return { error: "User creation failed", details: error.message };
@@ -155,32 +155,32 @@ export const getCaategoriesCache = unstable_cache(async () => await Category.fin
   tags: ["categories"],
 });
 // export const getPaginatedCourses
-export const createCertificate = async (data) => {
+export const createCertificate = async (data: any) => {
   try {
     const certificate = await Certificate.create(data);
     await Course.findByIdAndUpdate(data.course, { $push: { certificates: certificate._id } });
     const certificateObj = JSON.parse(JSON.stringify(certificate));
 
     return { success: "Certificate created successfully", data: certificateObj };
-  } catch (error) {
+  } catch (error:any) {
     return { error: "Error creating certificate", details: error.message };
   }
 };
 
 // Update an existing certificate
-export const updateCertificate = async (data, id) => {
+export const updateCertificate = async (data: any, id: string) => {
   try {
     const certificate = await Certificate.findByIdAndUpdate(id, data, { new: true });
     const certificateObj = JSON.parse(JSON.stringify(certificate));
 
     return { success: "Certificate updated successfully", data: certificateObj };
-  } catch (error) {
+  } catch (error:any) {
     return { error: "Error updating certificate", details: error.message };
   }
 };
 
 // Delete a certificate
-export const deleteCertificate = async (id) => {
+export const deleteCertificate = async (id: string) => {
   try {
     const certificate = await Certificate.findById(id);
 
@@ -192,7 +192,7 @@ export const deleteCertificate = async (id) => {
     await Certificate.findByIdAndDelete(id);
 
     return { success: "Certificate deleted successfully" };
-  } catch (error) {
+  } catch (error:any) {
     return { error: "Error deleting certificate", details: error.message };
   }
 };

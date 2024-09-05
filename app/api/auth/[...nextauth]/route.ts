@@ -15,19 +15,19 @@ export const authOptions = {
       },
       async authorize(credentials) {
         if (!credentials) throw new Error("No credentials provided");
-       await  connect();
+        await connect();
         const user = await User.findOne({ email: credentials.email }).select("+password");
 
         if (!user) {
           throw new Error("No user found with the email");
         }
-        // const isValidPassword = await compare(credentials.password, user.password);
-        // console.log(isValidPassword);
+        const isValidPassword = await compare(credentials.password, user.password);
+        console.log(isValidPassword);
 
-        // if (!isValidPassword) {
-        //   throw new Error("Invalid password");
-        // }
-        console.log(user)
+        if (!isValidPassword) {
+          throw new Error("Invalid password");
+        }
+        console.log(user);
         return { id: user._id, email: user.email, name: user.name };
       },
     }),

@@ -9,7 +9,7 @@ import { columns } from "./(start)/columns";
 import CreateCourseForm from "../../components/CreateCourse";
 import MaxWidthWrapper from "../../components/MaxWidthWrapper";
 import { unstable_setRequestLocale } from "next-intl/server";
-
+export const dynamic = "force-dynamic";
 const page = async ({ params: { locale } }: { params: { locale: string } }) => {
   await connect();
   const courses = await Course.find({}).lean();

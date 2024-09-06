@@ -6,12 +6,13 @@ import MaxWidthWrapper from "./defaults/MaxWidthWrapper";
 import Image from "next/image";
 import FlexWrapper from "./defaults/FlexWrapper";
 import Link from "next/link";
+import Socials from "./Socials";
+import Paragraph from "./defaults/Paragraph";
 
 const Footer = () => {
   const t = useTranslations("footer");
   return (
     <footer className="  bg-gray-800 text-xs md:text-sm relative">
-      <div className="lg:block hidden w-6 h-6 rounded-full bg-main2 absolute top-10 z-30 left-[30%]"></div>
       <div className=" relative ">
         <div className="  hidden lg:block z-[-1] absolute w-full h-full inset-0">
           <Image src={"/footer.svg"} alt="footer" fill className=" object-top object-cover" />
@@ -22,42 +23,19 @@ const Footer = () => {
             cols={11}
           >
             <div className=" col-span-4 lg:col-span-3 flex flex-col  items-center">
-              <Logo  />
-              {/* <Socials /> */}
+              <Logo />
+              <Socials />
             </div>
 
-            <div className="mt-3  col-span-full lg:col-span-2">
-              <ul className="  text-white items-center  flex flex-col gap-3 lg:list-disc">
-                <Link href={"/aboutus"}>{t("aboutus")}</Link>
-                <Link href={"/contact-us"}>{t("contactus")}</Link>
-                <Link href={"#"}>{t("ourblog")}</Link>
-                <Link href={"#"}>{t("testimonials")}</Link>
-                <Link href={"/faq"}>FAQ</Link>
-              </ul>
-            </div>
-            <div className=" col-span-full lg:col-span-6 self-center flex flex-col items-center lg:items-start">
-              <h1
-                className=" text-white   mb-3 after:w-full after:lg:block after:hidden after:left-[110%] after:top-1/2 after:rounded-2xl after:bg-white after:absolute after:h-[2px] 
-          relative text-base md:text-xl"
-              >
-                {t("jobs")}
-              </h1>
-              <ul className="  text-white flex flex-col gap-3 lg:list-disc">
-                <li>{t("senior")}</li>
-                <li>{t("jr")}</li>
-                <li>{t("predicate")}</li>
-                <li>{t("fresh")}</li>
-                <li>{t("mad")}</li>
-                <li>{t("predicate")}</li>
-              </ul>
+            <div className="mt-3 flex flex-col gap-2  col-span-full lg:col-span-2">
+              <h1 className=" text-white font-semibold">+971502274767</h1>
+              <p className=" text-white font-semibold">admin@alresalaetc.com</p>
             </div>
           </GridContainer>
           <FlexWrapper className=" w-full py-5 gap-5 flex justify-between items-center">
             <p className=" basis-[70%] text-gray-100">
-              {t("copyright")} <Link href={`https://rightminddev.com/`}>Right Mind</Link>
+              {t("copyright")} <Link href={`https://noor-hesham-portfolio.vercel.app/`}>NOOR HESHAM</Link>
             </p>
-
-      
           </FlexWrapper>
         </MaxWidthWrapper>
       </div>

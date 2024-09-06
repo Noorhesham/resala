@@ -29,7 +29,7 @@ export interface CustomFormProps {
 const CustomForm = ({ inputs, title, form, onSubmit, children, isPending }: CustomFormProps) => {
   return (
     <Form {...form}>
-      <form className="flex w-full items-stretch gap-2" onSubmit={form.handleSubmit(onSubmit)}>
+      <form className="flex w-full  h-full items-stretch gap-2" onSubmit={form.handleSubmit(onSubmit)}>
         <div className="flex flex-1 gap-2 flex-col">
           {title && <h1>{title}</h1>}
           <div className="flex pt-4 flex-col gap-2">
@@ -38,7 +38,7 @@ const CustomForm = ({ inputs, title, form, onSubmit, children, isPending }: Cust
             ))}
           </div>
           {children}
-          <Button disabled={isPending}>{isPending ? <BabySpinner /> : "Submit "}</Button>
+          <Button  className=" mt-auto"disabled={isPending}>{isPending ? <BabySpinner /> : "Submit "}</Button>
         </div>
       </form>
     </Form>

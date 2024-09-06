@@ -11,5 +11,51 @@
     "categories": "Categories",
     "certificates": "Certificates",
     "addadmin": "Add Admin"
+  },
+  "hero": {
+    "title": "Top Training TO",
+    "word1": "Learn In Depth",
+    "word2": "Build Your Skills",
+    "word3": "Share Your Knowledge",
+    "word4": "Success Stories",
+    "browseCourses": "Browse Courses",
+    "description": "Spotlight effect is a great way to draw attention to a specific part of the page. Here, we are drawing the attention towards the text section of the page. I don't know why but I'm running out of copy."
+  },
+  "certificate": {
+    "enterCode": "Enter Certificate Code:",
+    "placeholder": "enter certificate code",
+    "check": "Check",
+    "successMessage": "Certificate verified successfully!",
+    "errorMessage": "Invalid certificate code."
+  },
+  "form": {
+    "name": "Name",
+    "email": "Email",
+    "message": "Message",
+    "namePlaceholder": "Enter your name",
+    "emailPlaceholder": "Enter your email",
+    "messagePlaceholder": "Write your message",
+    "contactUs": "Contact us to buy {courseName}",
+    "successMessage": "Message sent successfully!",
+    "errorMessage": "Error sending message."
+  },
+  "page": {
+    "errorFetching": "Error fetching course details.",
+    "price": "Price",
+    "unknownCategory": "Unknown Category",
+    "testimonials": "Testimonials"
+  },
+  "footer": {
+    "aboutus": "About Us",
+    "contactus": "Contact Us",
+    "ourblog": "Our Blog",
+    "testimonials": "Testimonials",
+    "jobs": "Jobs",
+    "senior": "Senior Developer",
+    "jr": "Junior Developer",
+    "predicate": "Predicate Developer",
+    "fresh": "Fresh Graduate",
+    "mad": "Mad Developer",
+    "copyright": "© 2024 by Noor Hesham"
   }
 }

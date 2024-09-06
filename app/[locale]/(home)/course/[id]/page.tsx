@@ -1,21 +1,24 @@
-import { getEntity } from "@/app/actions/actions";
+import { getEntities, getEntity } from "@/app/actions/actions";
+import SliderCards from "@/app/components/CardsSlider";
 import CertificateVerify from "@/app/components/CertificateVerify";
 import MaxWidthWrapper from "@/app/components/defaults/MaxWidthWrapper";
 import Paragraph from "@/app/components/defaults/Paragraph";
 import FormSend from "@/app/components/FormSend";
 import ImageSlider from "@/app/components/ImageSlider";
+import { getTranslations } from "next-intl/server";
 import React from "react";
 
 const Page = async ({ params: { locale, id } }: { params: { locale: string; id: string } }) => {
+  const t = await getTranslations({ locale });
   const { data, error } = await getEntity("Course", id, locale);
-
+  const { data: data2, error: error2 } = await getEntities("Comment", 1, { courseId: id }, true, locale, true);
   if (error || !data) {
-    return <div>Error fetching course details.</div>;
+    return <div>{t("errorFetching")}</div>;
   }
 
   const course = data;
-
   const images = course.images || [];
+
   return (
     <MaxWidthWrapper>
       <div className="bg-white">
@@ -29,7 +32,7 @@ const Page = async ({ params: { locale, id } }: { params: { locale: string; id: 
                 <div className="flex items-start">
                   <div className="ml-4 rounded flex items-center border-l text-muted-foreground border-gray-300 pl-4">
                     <p className="transition hover:text-orange-400 mb-auto self-start underline">
-                      {course.category?.name[locale || "en"] || "Unknown Category"}
+                      {course.category?.name[locale || "en"] || t("unknownCategory")}
                     </p>
                   </div>
                 </div>
@@ -38,25 +41,35 @@ const Page = async ({ params: { locale, id } }: { params: { locale: string; id: 
                   <Paragraph description={course.description} />
                 </div>
                 <div className="mt-10 lg:self-start col-start-1 lg:col-start-2 lg:max-w-lg">
-                  Price :{course.price} $
+                  {t("price")}: {course.price} $
                 </div>
               </section>
             </div>
             <div className="mt-10 flex flex-col gap-2 lg:mt-0">
               {images.length > 0 && (
-                <div className=" rounded-lg">
+                <div className="rounded-lg">
                   <ImageSlider urls={images.map((img: any) => img.secure_url)} />
                 </div>
               )}
             </div>
-            <div className=" flex items-center justify-between w-full col-span-full">
-              <div className=" flex flex-col mt-14">
-                <h1 className=" text-4xl font-bold capitalize blue_gradient">Contact us to buy {course.name}</h1>
+            <div className="mt-14 flex md:flex-row flex-col gap-4 items-stretch justify-between w-full col-span-full">
+              <div className="flex w-full flex-col">
+                <h1 className="text-4xl font-bold capitalize blue_gradient">
+                  {t("contactUs", { courseName: course.name })}
+                </h1>
                 <FormSend course={course} />
               </div>
               <CertificateVerify />
             </div>
           </div>
+          {data2?.data.length > 0 && (
+            <div className="flex flex-col gap-2">
+              <h1 className="text-4xl font-bold capitalize blue_gradient">{t("testimonials")}</h1>
+              <div className="w-full col-span-full">
+                <SliderCards cards={data2?.data} />
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </MaxWidthWrapper>

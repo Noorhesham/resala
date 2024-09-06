@@ -37,10 +37,10 @@ const ToolBox = () => {
             {item.name}
           </p>
         ))}
+        <Button onClick={() => router.push("/", { scroll: false })} variant="ghost">
+          Reset
+        </Button>
       </div>
-      <Button onClick={() => router.push("/", { scroll: false })} variant="ghost">
-        Reset
-      </Button>
     </div>
   );
 };

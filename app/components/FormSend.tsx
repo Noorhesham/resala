@@ -16,7 +16,7 @@ const sendSchema = z.object({
 });
 
 const FormSend = ({ course }: { course: any }) => {
-  const t = useTranslations();
+  const t = useTranslations("form");
   const form = useForm({
     resolver: zodResolver(sendSchema),
     mode: "onChange",
@@ -27,39 +27,37 @@ const FormSend = ({ course }: { course: any }) => {
       try {
         const response = await sendEmail(data, course);
 
-        console.log(response);
-
         if (response.success) {
-          toast.success("Message sent successfully!");
+          toast.success(t("successMessage"));
         }
       } catch (error: any) {
-        toast.error(error);
+        toast.error(t("errorMessage"));
       }
     });
   };
   const formArray = [
     {
       name: "name",
-      label: "Name",
-      placeholder: "Name",
+      label: t("name"),
+      placeholder: t("namePlaceholder"),
       type: "text",
     },
     {
       name: "email",
-      label: "Email",
-      placeholder: "Email",
+      label: t("email"),
+      placeholder: t("emailPlaceholder"),
       type: "email",
     },
     {
       name: "message",
-      label: "Message",
-      placeholder: "Message",
+      label: t("message"),
+      placeholder: t("messagePlaceholder"),
       type: "text",
       area: true,
     },
   ];
   return (
-    <div>
+    <div className="h-full w-full self-stretch">
       <CustomForm isPending={isPending} inputs={formArray} form={form} onSubmit={onSubmit} />
     </div>
   );

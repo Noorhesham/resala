@@ -11,5 +11,51 @@
     "categories": "التصنيفات",
     "certificates": "الشهادات",
     "addadmin": "اضافة مشرف"
+  },
+  "hero": {
+    "title": "أفضل تدريب لـ",
+    "word1": "تعلم بعمق",
+    "word2": "طور مهاراتك",
+    "word3": "شارك معرفتك",
+    "word4": "قصص نجاح",
+    "browseCourses": "تصفح الدورات",
+    "description": "تأثير تسليط الضوء هو وسيلة رائعة لجذب الانتباه إلى جزء معين من الصفحة. هنا، نقوم بجذب الانتباه نحو قسم النص من الصفحة. لا أعرف لماذا لكنني نفذت من النص."
+  },
+  "certificate": {
+    "enterCode": "أدخل رمز الشهادة:",
+    "placeholder": "أدخل رمز الشهادة",
+    "check": "تحقق",
+    "successMessage": "تم التحقق من الشهادة بنجاح!",
+    "errorMessage": "رمز الشهادة غير صالح."
+  },
+  "form": {
+    "name": "الاسم",
+    "email": "البريد الإلكتروني",
+    "message": "الرسالة",
+    "namePlaceholder": "أدخل اسمك",
+    "emailPlaceholder": "أدخل بريدك الإلكتروني",
+    "messagePlaceholder": "اكتب رسالتك",
+    "contactUs": "اتصل بنا لشراء {courseName}",
+    "successMessage": "تم إرسال الرسالة بنجاح!",
+    "errorMessage": "خطأ في إرسال الرسالة."
+  },
+  "page": {
+    "errorFetching": "خطأ في جلب تفاصيل الدورة.",
+    "price": "السعر",
+    "unknownCategory": "فئة غير معروفة",
+    "testimonials": "الشهادات"
+  },
+  "footer": {
+    "aboutus": "من نحن",
+    "contactus": "اتصل بنا",
+    "ourblog": "مدونتنا",
+    "testimonials": "الشهادات",
+    "jobs": "وظائف",
+    "senior": "مطور أول",
+    "jr": "مطور مبتدئ",
+    "predicate": "مطور متوسط",
+    "fresh": "خريج جديد",
+    "mad": "مطور مجنون",
+    "copyright": "© 2024 بواسطة نور هشام"
   }
 }

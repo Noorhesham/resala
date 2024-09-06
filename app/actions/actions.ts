@@ -1,13 +1,16 @@
 "use server";
+import nodemailer from "nodemailer";
 import Course from "../models/Course";
 import { v2 as cloudinary } from "cloudinary";
 import User from "../models/User";
 import bcrypt from "bcrypt";
 import Category from "../models/Category";
-import { Comment } from "../models/Comment";
+import Comment from "../models/Comment";
 import { revalidatePath, revalidateTag, unstable_cache } from "next/cache";
 import connect from "@/lib/clientPromise";
 import Certificate from "../models/Certificate";
+import models, { ModelProps } from "../constants";
+import mongoose from "mongoose";
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -162,7 +165,7 @@ export const createCertificate = async (data: any) => {
     const certificateObj = JSON.parse(JSON.stringify(certificate));
 
     return { success: "Certificate created successfully", data: certificateObj };
-  } catch (error:any) {
+  } catch (error: any) {
     return { error: "Error creating certificate", details: error.message };
   }
 };
@@ -174,7 +177,7 @@ export const updateCertificate = async (data: any, id: string) => {
     const certificateObj = JSON.parse(JSON.stringify(certificate));
 
     return { success: "Certificate updated successfully", data: certificateObj };
-  } catch (error:any) {
+  } catch (error: any) {
     return { error: "Error updating certificate", details: error.message };
   }
 };
@@ -192,7 +195,178 @@ export const deleteCertificate = async (id: string) => {
     await Certificate.findByIdAndDelete(id);
 
     return { success: "Certificate deleted successfully" };
-  } catch (error:any) {
+  } catch (error: any) {
     return { error: "Error deleting certificate", details: error.message };
+  }
+};
+// Generic CRUD Function
+const getModel = (modelName: ModelProps) => {
+  const models: Record<ModelProps, any> = {
+    Course,
+    User,
+    Category,
+    Comment,
+    Certificate,
+  };
+  return models[modelName];
+};
+
+// Generic CRUD Operation
+export const createEntity = async (modelName: ModelProps, data: any) => {
+  try {
+    console.log(data, modelName);
+
+    const Model = getModel(modelName);
+    const entity = await Model.create(data);
+    const entityObj = JSON.parse(JSON.stringify(entity));
+    console.log(entityObj);
+    revalidateTag(modelName);
+    revalidatePath("/");
+    return { success: `${modelName} created successfully`, data: entityObj };
+  } catch (error: any) {
+    return { error: `Error creating ${modelName}`, details: error.message };
+  }
+};
+
+export const updateEntity = async (modelName: ModelProps, id: string, data: any) => {
+  try {
+    console.log(data, id, modelName);
+    const Model = getModel(modelName);
+    const entity = await Model.findByIdAndUpdate(id, data, { new: true });
+    const entityObj = JSON.parse(JSON.stringify(entity));
+    revalidateTag(modelName);
+    revalidatePath("/");
+    return { success: `${modelName} updated successfully`, data: entityObj };
+  } catch (error: any) {
+    return { error: `Error updating ${modelName}`, details: error.message };
+  }
+};
+
+export const deleteEntity = async (modelName: ModelProps, id: string) => {
+  try {
+    console.log(modelName, id);
+    const Model = getModel(modelName);
+    await Model.findByIdAndDelete(id);
+    revalidateTag(modelName);
+    revalidatePath("/");
+    return { success: `${modelName} deleted successfully` };
+  } catch (error: any) {
+    return { error: `Error deleting ${modelName}`, details: error.message };
+  }
+};
+
+// Example: Using get function with caching
+
+export const getEntities = async (
+  modelName: ModelProps,
+  page = 1,
+  filter?: any,
+  all = false,
+  locale = "en",
+  dash = false
+) => {
+  try {
+    await connect();
+    const Model = getModel(modelName);
+    const skip = (page - 1) * 10;
+    let query: any = {};
+    if (filter) {
+      if (filter.courseId) {
+        query.courseId = new mongoose.Types.ObjectId(filter.courseId);
+      }
+      if (filter.category) {
+        query.category = new mongoose.Types.ObjectId(filter.category);
+      }
+    }
+    console.log(filter, query);
+    const projection = {
+      name: all && !dash ? 1 : { $ifNull: [`$name.${locale}`, `$name.en`] },
+      description: all && !dash ? 1 : { $ifNull: [`$description.${locale}`, `$description.en`] },
+      price: 1,
+      images: 1,
+      category: 1,
+      photo: 1,
+    };
+
+    const entities = all
+      ? await Model.aggregate([{ $match: query }, { $project: projection }])
+      : await Model.aggregate([
+          { $match: query },
+          {
+            $lookup: {
+              from: "categories", // Ensure this matches the actual collection name in your database
+              localField: "category", // This should match the field in your document that stores the category ID
+              foreignField: "_id", // The field in the "categories" collection that matches "localField"
+              as: "category",
+            },
+          },
+          { $unwind: { path: "$category", preserveNullAndEmptyArrays: true } }, // Unwind to flatten the category array to a single object
+          { $skip: skip },
+          { $limit: 10 },
+          { $project: projection },
+        ]);
+
+    const totalPages = Math.ceil((await Model.countDocuments(query)) / 10);
+    return {
+      success: `${modelName} fetched successfully`,
+      data: { data: entities, totalPages },
+    };
+  } catch (error) {
+    console.log(error);
+    return { error: `Error fetching ${modelName}`, details: error };
+  }
+};
+export const getEntity = async (modelName: ModelProps, id: string, locale: string) => {
+  try {
+    const Model = getModel(modelName);
+    const entity = await Model.findById(id).populate("category").lean(); // Use `lean` to get a plain JavaScript object
+
+    if (!entity) {
+      return { error: `${modelName} not found` };
+    }
+
+    // Ensure locale fields are correctly set
+    const localizedEntity = {
+      ...entity,
+      name: entity.name ? entity.name[locale] || entity.name.en : undefined,
+      description: entity.description ? entity.description[locale] || entity.description.en : undefined,
+    };
+
+    return { success: `${modelName} fetched successfully`, data: localizedEntity };
+  } catch (error) {
+    return { error: `Error fetching ${modelName}`, details: error };
+  }
+};
+
+export const sendEmail = async (data: any, course: any) => {
+  try {
+    const customMessage = `Course: ${course?.name}`;
+
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.NODEMAILER_EMAIL,
+        pass: process.env.NODEMAILER_PW,
+      },
+    });
+
+    const mailOptions = {
+      from: data.email,
+      to: "noordragon2004@gmail.com",
+      subject: `New message from ${data.name}`,
+      text: data.message || "No message provided",
+      html: `
+        <p><strong>Name:</strong> ${data.name}</p>
+        <p><strong>Email:</strong> ${data.email}</p>
+        <p><strong>Message:</strong> ${data.message || "No message provided"}</p>
+        <a href="/course/${course?._id}">${customMessage}</a>
+      `,
+    };
+
+    await transporter.sendMail(mailOptions);
+
+    return { success: "Email sent successfully" };
+  } catch (error: any) {
+    return { error: "Error sending email", details: error.message };
   }
 };

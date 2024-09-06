@@ -33,12 +33,12 @@ export default function Home({
   params: { locale: string };
 }) {
   unstable_setRequestLocale(locale);
-
   return (
     <main className="h-full w-full relative">
       <Hero />
       <Categories />
-      <ProductReelFetch page={searchParams.page} filter={searchParams.filter} />
+      {/*@ts-ignore*/}
+      <ProductReelFetch locale={locale} page={searchParams.page} filter={{ category: searchParams.category }} />
     </main>
   );
 }

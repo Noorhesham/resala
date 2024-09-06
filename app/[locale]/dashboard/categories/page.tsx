@@ -1,18 +1,14 @@
-import { deleteCategory } from "@/app/actions/actions";
+import { deleteCategory, getEntities } from "@/app/actions/actions";
 import { DataTable } from "@/app/components/DataTable";
 import MaxWidthWrapper from "@/app/components/MaxWidthWrapper";
-import Category from "@/app/models/Category";
-import connect from "@/lib/clientPromise";
-import { categoryColumns } from "../course/[id]/columns";
 import CreateCategoryForm from "@/app/components/CreateCategory";
 import { Button } from "@/components/ui/button";
 import CustomDialog from "@/app/components/CustomDialog";
+import { columns } from "./columns";
 export const dynamic = "force-dynamic";
 
-const page = async () => {
-  await connect();
-
-  const categoreis = await Category.find().lean();
+const Page = async ({ params: { locale } }: { params: { locale: string } }) => {
+  const { data } = await getEntities("Category", 1, "", true, locale);
 
   return (
     <MaxWidthWrapper noPadding noPaddingX className="flex flex-col mt-5">
@@ -22,8 +18,8 @@ const page = async () => {
         content={<CreateCategoryForm />}
       />
       {/*@ts-ignore*/}
-      <DataTable handleDeleteAll={deleteCategory} columns={categoryColumns} data={categoreis} />
+      <DataTable handleDeleteAll={deleteCategory} columns={columns} data={data?.data} entity="Category" />
     </MaxWidthWrapper>
   );
 };
-export default page;
+export default Page;

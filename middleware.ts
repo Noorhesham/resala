@@ -13,10 +13,12 @@ const localeMiddleware = createMiddleware({
 
 export async function middleware(req: NextRequest) {
   const url = req.nextUrl.clone();
+
   const session = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
   const isLoggedIn = !!session;
   const isSecure = url.pathname.includes("dashboard");
-
+  const locale = req.cookies.get("NEXT_LOCALE")?.value || "en";
+  req.headers.set("locale", locale);
   if (isLoggedIn && url.pathname.includes("login")) {
     url.pathname = "/dashboard";
     return NextResponse.redirect(url);

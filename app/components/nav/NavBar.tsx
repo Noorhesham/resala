@@ -9,6 +9,7 @@ import { toast } from "react-toastify";
 import MotionItem from "../defaults/MotionItem";
 import { AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
+import Language from "../Language";
 const links = [
   {
     text: "Home",
@@ -74,14 +75,16 @@ const NavBar = () => {
             )}
           >
             <div className="flex w-full justify-between  items-center  gap-20 ">
-              <div
-                className={`${
-                  !isTopPage && !isScrollingDown && "lg:opacity-100  hidden lg:flex  opacity-0"
-                } flex duration-150  items-center`}
-              >
-                <Logo />
+              <div className=" flex items-center gap-2">
+                <div
+                  className={`${
+                    !isTopPage && !isScrollingDown && "lg:opacity-100  hidden lg:flex  opacity-0"
+                  } flex duration-150  items-center`}
+                >
+                  <Logo />
+                </div>
+                <Language />
               </div>
-
               <ul className=" hidden lg:flex z-30 relative items-center  gap-4 xl:gap-8 ">
                 {links.map((link) => (
                   <NavLink key={link.text} href={link.href} text={link.text} />

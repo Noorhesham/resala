@@ -5,13 +5,16 @@ import { Form } from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "react-toastify";
 import { z } from "zod";
-import FormInput from "./FormInput";
 import { Button } from "@/components/ui/button";
-import { createCategory, updateCategory } from "../actions/actions"; // Replace with your actual category actions
+import {  createEntity,  updateEntity } from "../actions/actions"; // Replace with your actual category actions
 import { useRouter } from "next/navigation";
+import ArabicEnglishForm from "./ArabicEnglishForm";
 
 const CategorySchema = z.object({
-  name: z.string().min(1, { message: "Required" }),
+  name: z.object({
+    ar: z.string().min(1, { message: "Required" }),
+    en: z.string().min(1, { message: "الحقل مطلوب" }),
+  }),
 });
 
 const CreateCategoryForm = ({ category }: { category?: any }) => {
@@ -27,7 +30,9 @@ const CreateCategoryForm = ({ category }: { category?: any }) => {
   const onSubmit = async (data: any) => {
     startTransition(async () => {
       try {
-        const serverRes = category?._id ? await updateCategory(data, category._id) : await createCategory(data);
+        const serverRes = category?._id
+          ? await updateEntity("Category", category._id, data)
+          : await createEntity("Category", data);
 
         if (serverRes.success) {
           toast.success(serverRes.success);
@@ -44,7 +49,7 @@ const CreateCategoryForm = ({ category }: { category?: any }) => {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-4 p-4">
-        <FormInput label="Category Name" name="name" placeholder="Category Name" />
+        <ArabicEnglishForm nodesc={true} />
         <Button disabled={isPending}>{category ? "Update" : "Create"} Category</Button>
       </form>
     </Form>

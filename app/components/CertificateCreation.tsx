@@ -10,15 +10,24 @@ import { createCertificate, updateCertificate } from "../actions/actions"; // Re
 import { Form } from "@/components/ui/form";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
+import { useGetCourses } from "./Actions";
+import { useLocale } from "next-intl";
+import ArabicEnglishForm from "./ArabicEnglishForm";
 
 // Validation schema using Zod
 const CertificateSchema = z.object({
-  person: z.string().min(1, { message: "Person's name is required" }),
+  person: z.object({
+    en: z.string().min(1, { message: "Required" }),
+    ar: z.string().min(1, { message: "الحقل مطلوب" }),
+  }),
   course: z.string().min(1, { message: "Course selection is required" }),
   code: z.string().min(1, { message: "Code is required" }),
 });
 
-const CreateCertificateForm = ({ courses, certificate }: { courses: any[]; certificate?: any }) => {
+const CreateCertificateForm = ({ certificate }: { certificate?: any }) => {
+  const locale = useLocale();
+  const { data, isLoading } = useGetCourses(locale);
+  const courses = data?.data;
   const form = useForm<z.infer<typeof CertificateSchema>>({
     resolver: zodResolver(CertificateSchema),
     defaultValues: {
@@ -28,7 +37,9 @@ const CreateCertificateForm = ({ courses, certificate }: { courses: any[]; certi
     },
   });
   const router = useRouter();
+  console.log(form.formState.errors)
   const onSubmit = async (data: any) => {
+    console.log(data);
     try {
       const result = certificate?._id ? await updateCertificate(data, certificate._id) : await createCertificate(data);
       console.log(result);
@@ -46,9 +57,9 @@ const CreateCertificateForm = ({ courses, certificate }: { courses: any[]; certi
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-3">
-        <FormInput label="Person" name="person" placeholder="Person's Name" />
+        <ArabicEnglishForm nodesc name={'person'}/>
         <FormInput label="code" name="code" placeholder="code" />
-        <FormSelect label="Course" name="course" options={courses} />
+        <FormSelect label="Course" name="course" options={courses?.data} />
         <Button type="submit">Create Certificate</Button>
       </form>
     </Form>

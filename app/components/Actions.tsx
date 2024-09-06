@@ -14,7 +14,7 @@ import { MoreHorizontal, PenIcon } from "lucide-react";
 import CustomDialog from "@/app/components/CustomDialog";
 import CreateCourse from "@/app/components/CreateCourse";
 import { ImBin2 } from "react-icons/im";
-import { deleteCategory, deleteComment, deleteCourse, getCourses } from "@/app/actions/actions";
+import { deleteEntity, getCourses, getEntities } from "@/app/actions/actions";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import CreateCategoryForm from "./CreateCategory";
@@ -22,17 +22,16 @@ import CreateCommentForm from "./CreateComment";
 import CreateCertificateForm from "./CertificateCreation";
 import { useQuery } from "@tanstack/react-query";
 
-export const useGetCourses = () => {
+export const useGetCourses = (locale: string) => {
   const { data, isLoading } = useQuery({
     queryKey: ["courses"],
-    queryFn: async () => await getCourses(1, "", true),
+    queryFn: async () => await getEntities("Course", 1, "", false, locale, true),
   });
   return { data, isLoading };
 };
 const Actions = ({ product, sheet, type = "course" }: { product: any; sheet?: boolean; type?: string }) => {
   const router = useRouter();
-  const { data, isLoading } = useGetCourses();
-  console.log(data);
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -56,7 +55,7 @@ const Actions = ({ product, sheet, type = "course" }: { product: any; sheet?: bo
             ) : type === "category" ? (
               <CreateCategoryForm category={product} />
             ) : type === "certificate" ? (
-              <CreateCertificateForm courses={data?.data?.courses} certificate={product} />
+              <CreateCertificateForm certificate={product} />
             ) : (
               <CreateCommentForm courseId={product.course} comment={product} />
             )
@@ -76,12 +75,7 @@ const Actions = ({ product, sheet, type = "course" }: { product: any; sheet?: bo
           }
           value={product.name}
           onClick={async () => {
-            const res =
-              type === "course"
-                ? await deleteCourse(product._id)
-                : type === "category"
-                ? await deleteCategory(product._id)
-                : await deleteComment(product._id);
+            const res = await deleteEntity(type.replace(type[0], type[0].toUpperCase()), product._id);
             if (res.success) {
               toast.success(res.success);
               router.refresh();

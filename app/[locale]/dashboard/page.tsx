@@ -1,20 +1,21 @@
 import React from "react";
 import CustomDialog from "@/app/components/CustomDialog";
 import connect from "@/lib/clientPromise";
-import Course from "../../models/Course";
 import { Button } from "@/components/ui/button";
 import { DataTable } from "../../components/DataTable";
-import { deleteCourse } from "../../actions/actions";
+import { deleteCourse, deleteEntity, getEntities } from "../../actions/actions";
 import { columns } from "./(start)/columns";
 import CreateCourseForm from "../../components/CreateCourse";
 import MaxWidthWrapper from "../../components/MaxWidthWrapper";
 import { unstable_setRequestLocale } from "next-intl/server";
+
 export const dynamic = "force-dynamic";
-const page = async ({ params: { locale } }: { params: { locale: string } }) => {
-  await connect();
-  const courses = await Course.find({}).lean();
+
+const Page = async ({ params: { locale } }: { params: { locale: string } }) => {
   unstable_setRequestLocale(locale);
 
+  const { data } = await getEntities("Course", 1, {}, true);
+  console.log(data);
   return (
     <MaxWidthWrapper className="flex flex-col mt-5">
       <CustomDialog
@@ -22,10 +23,9 @@ const page = async ({ params: { locale } }: { params: { locale: string } }) => {
         title="Add Course"
         content={<CreateCourseForm />}
       />
-      {/*@ts-ignore*/}
-      <DataTable handleDeleteAll={deleteCourse} columns={columns} data={courses} />
+      <DataTable handleDeleteAll={deleteEntity} entity={"Course"} columns={columns} data={data?.data} />
     </MaxWidthWrapper>
   );
 };
 
-export default page;
+export default Page;

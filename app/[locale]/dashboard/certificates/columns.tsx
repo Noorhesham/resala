@@ -7,6 +7,7 @@ import { ArrowUpDown } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import Link from "next/link";
 import Actions from "@/app/components/Actions";
+import Name from "@/app/components/Name";
 
 export const columns: ColumnDef<any>[] = [
   {
@@ -36,7 +37,7 @@ export const columns: ColumnDef<any>[] = [
         <ArrowUpDown className="ml-2 h-4 w-4" />
       </Button>
     ),
-    cell: ({ row }) => <div className="text-left font-medium">{row.original.person}</div>,
+    cell: ({ row }) => <Name name={row.original.person} />,
   },
   {
     accessorKey: "course.name", // Access the course name through the populated course field
@@ -46,11 +47,7 @@ export const columns: ColumnDef<any>[] = [
         <ArrowUpDown className="ml-2 h-4 w-4" />
       </Button>
     ),
-    cell: ({ row }) => (
-      <Link href={`/dashboard/course/${row.original.course._id}`} className="text-left font-medium">
-        {row.original.course.name}
-      </Link>
-    ),
+    cell: ({ row }) => <Name name={row.original?.course?.name} href={`/dashboard/course/${row.original?.course?._id}`} />,
   },
   {
     id: "actions",

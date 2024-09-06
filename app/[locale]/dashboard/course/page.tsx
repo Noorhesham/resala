@@ -1,21 +1,23 @@
-import { deleteComment } from "@/app/actions/actions";
+import { deleteEntity, getEntities } from "@/app/actions/actions";
 import { DataTable } from "@/app/components/DataTable";
 import MaxWidthWrapper from "@/app/components/MaxWidthWrapper";
-import { Comment } from "@/app/models/Comment";
-import connect from "@/lib/clientPromise";
 import { commentColumns } from "./[id]/columns";
 export const dynamic = "force-dynamic";
 
-const page = async () => {
-  await connect();
-
-  const comments = await Comment.find().lean(); // Fetch comments based on dynamic courseId
+const Page = async ({ params: { locale } }: { params: { locale: string } }) => {
+  const { data } = await getEntities("Comment", 1, "", true, locale);
 
   return (
     <MaxWidthWrapper noPadding noPaddingX className="flex flex-col mt-5">
       {/*@ts-ignore*/}
-      <DataTable handleDeleteAll={deleteComment} columns={commentColumns} data={comments} />
+      <DataTable entity="Comment" handleDeleteAll={deleteEntity} columns={commentColumns} data={data?.data} />
     </MaxWidthWrapper>
   );
 };
-export default page;
+export default Page;
+/*
+languages 
+deailed page 
+send email 
+
+*/

@@ -5,10 +5,11 @@ import ImageSlider from "./ImageSlider";
 import { ProductLoader } from "./ProductReel";
 
 import Link from "next/link";
+import { useLocale } from "next-intl";
 
 const ProductCard = ({ product, index }: { product: any; index: number }) => {
   const [isVisible, setIsVisible] = React.useState(false);
-
+  const locale = useLocale();
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsVisible(true);
@@ -30,7 +31,7 @@ const ProductCard = ({ product, index }: { product: any; index: number }) => {
         <div className=" flex flex-col self-stretch justify-between py-2 px-4 w-full">
           <div className="flex items-start flex-col justify-between">
             <div className=" flex items-start flex-col ">
-              <p className=" mt-1 font-semibold text-sm ">category : {product.category.name}</p>
+              <p className=" mt-1 font-semibold text-sm ">category : {product.category.name[locale || "en"]}</p>
             </div>
             <h3 className="font-medium text-base  ">
               {product.name.length > 20 ? product.name.substring(0, 20) + "..." : product.name}

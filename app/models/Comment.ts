@@ -1,4 +1,5 @@
 import mongoose, { Schema } from "mongoose";
+import { localizedStringSchema } from "./Course";
 
 const imageSchema = new Schema({
   secure_url: { type: String, required: true },
@@ -6,9 +7,10 @@ const imageSchema = new Schema({
 });
 
 const commentSchema = new Schema({
-  name: { type: String, required: true },
-  description: { type: String, required: true },
+  name: localizedStringSchema,
+  description: localizedStringSchema,
   photo: imageSchema,
   courseId: { type: Schema.Types.ObjectId, ref: "Course" },
 });
-export const Comment = mongoose.models.Comment || mongoose.model("Comment", commentSchema);
+const Comment = mongoose.models.Comment || mongoose.model("Comment", commentSchema);
+export default Comment;

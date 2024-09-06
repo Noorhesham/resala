@@ -24,6 +24,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import PopUp from "./PopUp";
+import { ModelProps } from "../constants";
 interface TableData {
   _id: string;
   name: string;
@@ -33,7 +34,8 @@ interface DataTableProps<TData, TValue> {
   data: TData[];
   page: number;
   totalPages: number;
-  handleDeleteAll: (ids: string[]) => void;
+  handleDeleteAll: any;
+  entity: ModelProps;
 }
 
 export function DataTable<TData extends TableData, TValue>({
@@ -41,8 +43,10 @@ export function DataTable<TData extends TableData, TValue>({
   data,
   page,
   totalPages,
+  entity,
   handleDeleteAll,
 }: DataTableProps<TData, TValue>) {
+  console.log(data);
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
@@ -73,7 +77,9 @@ export function DataTable<TData extends TableData, TValue>({
 
   return (
     <div className="">
-      {chosen.length > 0 && <PopUp count={chosen.length} chosen={chosen} handleDelete={handleDeleteAll} />}
+      {chosen.length > 0 && (
+        <PopUp entity={entity} count={chosen.length} chosen={chosen} handleDelete={handleDeleteAll} />
+      )}
       <div className="flex justify-between items-center py-4">
         <div className="flex gap-2 items-center">
           {table.getColumn("firstName") && (

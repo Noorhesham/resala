@@ -1,7 +1,18 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Delete } from "./Delete";
-const PopUp = ({ count, handleDelete, chosen }: { count: number; handleDelete: Function; chosen: string[] }) => {
+import { ModelProps } from "../constants";
+const PopUp = ({
+  count,
+  handleDelete,
+  chosen,
+  entity,
+}: {
+  count: number;
+  handleDelete: Function;
+  chosen: string[];
+  entity: ModelProps;
+}) => {
   return (
     <motion.div
       transition={{ duration: 0.5, type: "tween", ease: "easeIn" }}
@@ -13,7 +24,7 @@ const PopUp = ({ count, handleDelete, chosen }: { count: number; handleDelete: F
       <span>{count} Selected</span>
       <Delete
         onClick={() => {
-          chosen.forEach((item) => handleDelete(item));
+          chosen.forEach((item) => handleDelete(entity, item));
         }}
         value={"Delete"}
       />

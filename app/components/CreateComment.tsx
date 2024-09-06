@@ -6,20 +6,24 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import { z } from "zod";
-import FormInput from "./FormInput";
-import ImageInput from "./ImageInput";
 import { Button } from "@/components/ui/button";
-import { createComment, updateComment } from "../actions/actions"; // Replace with your actual comment actions
+import { createComment, createEntity, updateComment, updateEntity } from "../actions/actions"; // Replace with your actual comment actions
 import PhotoInput from "./PhotoInput";
+import ArabicEnglishForm from "./ArabicEnglishForm";
 
 const CommentSchema = z.object({
-  name: z.string().min(1, { message: "Required" }),
-  description: z.string().min(1, { message: "Required" }),
+  name: z.object({
+    ar: z.string().min(1, { message: "Required" }),
+    en: z.string().min(1, { message: "الحقل مطلوب" }),
+  }),
+  description: z.object({
+    ar: z.string().min(1, { message: "Required" }),
+    en: z.string().min(1, { message: "الحقل مطلوب" }),
+  }),
   photo: z.any().optional(),
 });
 
 const CreateCommentForm = ({ comment, courseId }: { comment?: any; courseId: string }) => {
-  console.log("comment", comment, courseId);
   const form = useForm<z.infer<typeof CommentSchema>>({
     defaultValues: {
       name: comment?.name || "",
@@ -57,16 +61,14 @@ const CreateCommentForm = ({ comment, courseId }: { comment?: any; courseId: str
             public_id: cloudinaryData.public_id,
           };
         }
-
+        console.log(commentData);
         const serverRes = comment?._id
-          ? await updateComment(commentData, comment._id)
-          : await createComment(commentData);
-        console.log("serverRes", serverRes);
+          ? await updateEntity("Comment", comment._id, { ...commentData, courseId })
+          : await createEntity("Comment", commentData);
+
         if (serverRes.success) {
           toast.success(serverRes.success);
           router.refresh();
-        } else {
-          toast.error(serverRes);
         }
       } catch (error) {
         console.log(error);
@@ -78,9 +80,8 @@ const CreateCommentForm = ({ comment, courseId }: { comment?: any; courseId: str
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-4 p-4">
-        <FormInput label="Name" name="name" placeholder="Your Name" />
-        <FormInput label="Description" name="description" placeholder="Comment" />
-        <PhotoInput />
+        <ArabicEnglishForm />
+        <PhotoInput value={comment?.photo?.secure_url} />
         <Button disabled={isPending}>{comment ? "Update" : "Add"} Comment</Button>
       </form>
     </Form>

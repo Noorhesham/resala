@@ -6,12 +6,10 @@
     "selectLanguage": "عربي"
   },
   "navbar": {
-    "home": "الرئيسية",
-    "about us": "من نحن",
-    "contact us": "اتصل بنا",
-    "shop now": "تسوق الان",
-    "products": "المنتجات",
-    "get inspired": "احصل علي الالهام",
-    "become partener": "انضم الينا"
+    "courses": "الكورسات ",
+    "course": "من نحن",
+    "categories": "التصنيفات",
+    "certificates": "الشهادات",
+    "addadmin": "اضافة مشرف"
   }
 }

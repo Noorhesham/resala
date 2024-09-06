@@ -10,7 +10,7 @@ import Link from "next/link";
 const Footer = () => {
   const t = useTranslations("footer");
   return (
-    <footer className="  bg-primarys text-xs md:text-sm relative">
+    <footer className="  bg-gray-800 text-xs md:text-sm relative">
       <div className="lg:block hidden w-6 h-6 rounded-full bg-main2 absolute top-10 z-30 left-[30%]"></div>
       <div className=" relative ">
         <div className="  hidden lg:block z-[-1] absolute w-full h-full inset-0">
@@ -57,9 +57,7 @@ const Footer = () => {
               {t("copyright")} <Link href={`https://rightminddev.com/`}>Right Mind</Link>
             </p>
 
-            <div className="flex self-end  w-full lg:basis-[30%] items-center gap-3">
-              <DownloadButtons />
-            </div>
+      
           </FlexWrapper>
         </MaxWidthWrapper>
       </div>

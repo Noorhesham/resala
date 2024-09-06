@@ -1,4 +1,5 @@
 import { getEntity } from "@/app/actions/actions";
+import CertificateVerify from "@/app/components/CertificateVerify";
 import MaxWidthWrapper from "@/app/components/defaults/MaxWidthWrapper";
 import Paragraph from "@/app/components/defaults/Paragraph";
 import FormSend from "@/app/components/FormSend";
@@ -48,9 +49,12 @@ const Page = async ({ params: { locale, id } }: { params: { locale: string; id: 
                 </div>
               )}
             </div>
-            <div className=" flex flex-col mt-14">
-              <h1 className=" text-4xl font-bold capitalize blue_gradient">Contact us to buy {course.name}</h1>
-              <FormSend course={course} />
+            <div className=" flex items-center justify-between w-full col-span-full">
+              <div className=" flex flex-col mt-14">
+                <h1 className=" text-4xl font-bold capitalize blue_gradient">Contact us to buy {course.name}</h1>
+                <FormSend course={course} />
+              </div>
+              <CertificateVerify />
             </div>
           </div>
         </div>

@@ -21,7 +21,7 @@ const ToolBox = () => {
   const isChosen = searchParams.get("category");
   return (
     <div className="flex items-center justify-between">
-      <div className=" flex justify-center gap-5 pb-10 pt-5">
+      <div className=" flex justify-center items-center gap-5 pb-10 pt-5">
         {data?.data?.data.map((item: any) => (
           <p
             className={` font-semibold text-lg hover:underline duration-150 cursor-pointer ${

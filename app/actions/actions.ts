@@ -370,3 +370,17 @@ export const sendEmail = async (data: any, course: any) => {
     return { error: "Error sending email", details: error.message };
   }
 };
+export const checkCertificate = async (code: string, locale: string) => {
+  try {
+    console.log(code);
+    const entity = await Certificate.findOne({ code: code }).lean();
+    if (!entity) {
+      return { error: "Certificate not found" };
+    }
+    console.log(entity);
+    //@ts-ignore
+    return { success: `This is your certificate and it is valid ! ${entity.person[locale]}`, data: entity };
+  } catch (error) {
+    return { error: "Invalid code ! Please try again", details: error };
+  }
+};

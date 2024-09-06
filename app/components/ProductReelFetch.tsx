@@ -12,8 +12,8 @@ const fetchProducts = async (page = 1, filter = "", locale = "en") => {
   return await getEntities("Course", page, filter, false, locale);
 };
 
-const cachedFetchProducts = (page: number, filter: string, locale?: string) =>
-  unstable_cache(() => fetchProducts(page, filter, locale), [`products-${page}-${filter}-${locale}`], {
+const cachedFetchProducts = (page: number, filter: any, locale?: string) =>
+  unstable_cache(() => fetchProducts(page, filter, locale), [`products-${page}-${JSON.stringify(filter)}-${locale}`], {
     revalidate: 1,
   });
 

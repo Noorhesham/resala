@@ -1,7 +1,7 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import FormInput from "./FormInput";
 
-const ArabicEnglishForm = ({ nodesc = false, name }: { nodesc?: boolean; name?: any }) => {
+const ArabicEnglishForm = ({ nodesc = false, name="name" }: { nodesc?: boolean; name?: any }) => {
   console.log(name,`${name}.en `)
   return (
     <Tabs defaultValue="en" className="w-full">

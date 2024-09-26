@@ -8,11 +8,10 @@ import QueryProvider from "../utils/QueryProvider";
 
 import { Cairo, Roboto } from "next/font/google"; // Load both fonts
 
-// Load fonts
 const cairoFont = Cairo({
   subsets: ["arabic"],
   weight: ["400", "700"],
-  variable: "--font-cairo", // Define a custom variable for font
+  variable: "--font-cairo",
 });
 
 const robotoFont = Roboto({
@@ -39,7 +38,7 @@ export const metadata: Metadata = {
         alt: "Resala Training Courses",
       },
     ],
-    locale: "en_US", // Default language, change based on locale
+    locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
@@ -47,26 +46,6 @@ export const metadata: Metadata = {
     description: "Discover the best training courses for in-depth learning, skill development, and success stories.",
     images: ["https://www.resala-courses.com/images/og-image.jpg"],
   },
-};
-
-// Define JSON-LD for SEO
-const generateJSONLD = () => {
-  return {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    name: "Resala",
-    url: "https://www.resala-courses.com",
-    logo: "https://www.resala-courses.com/images/logo.png",
-    sameAs: ["https://www.facebook.com/resala", "https://www.instagram.com/resala", "https://www.twitter.com/resala"],
-    description: "Discover the best training courses for in-depth learning, skill development, and success stories.",
-    contactPoint: {
-      "@type": "ContactPoint",
-      telephone: "+1-800-555-5555",
-      contactType: "Customer Service",
-      areaServed: "World",
-      availableLanguage: ["English", "Arabic"],
-    },
-  };
 };
 
 export default async function RootLayout({
@@ -79,12 +58,11 @@ export default async function RootLayout({
   const messages = await getMessages();
   unstable_setRequestLocale(locale);
   const isArabic = locale === "ar";
-  const selectedFont = isArabic ? cairoFont.variable : robotoFont.variable;
   return (
     <html lang={locale}>
       <body
         style={{ textAlign: locale === "ar" ? "right" : "left", direction: locale === "ar" ? "rtl" : "ltr" }}
-        className={selectedFont}
+        className={isArabic ? cairoFont.className : robotoFont.className}
       >
         <QueryProvider>
           <ToastContainer

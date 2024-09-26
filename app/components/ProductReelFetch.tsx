@@ -7,6 +7,7 @@ import MaxWidthWrapper from "./MaxWidthWrapper";
 import { PaginationDemo } from "./Pagination";
 import ToolBox from "./ToolBox";
 import Empty from "./Empty";
+import { getTranslations } from "next-intl/server";
 
 const fetchProducts = async (page = 1, filter = "", locale = "en") => {
   return await getEntities("Course", page, filter, false, locale);
@@ -32,13 +33,13 @@ const ProductReelFetch = async ({
   if (!res || !res.data) {
     return null; // Handle the case where the response is invalid or empty
   }
-
+  const t = await getTranslations();
   const { data, totalPages } = res.data;
   const courses = data;
   console.log(courses);
   return (
     <MaxWidthWrapper id="courses" className="flex flex-col items-center gap-5">
-      <h1 className="text-6xl font-bold text-center blue_gradient mb-2">Courses</h1>
+      <h1 className="text-6xl font-bold text-center blue_gradient mb-2">{t("Courses")}</h1>
       <ToolBox />
       <GridContainer cols={3}>
         {courses.length > 0 ? (

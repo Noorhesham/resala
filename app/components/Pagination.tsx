@@ -8,6 +8,8 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import { cn } from "@/lib/utils";
+import { useLocale, useTranslations } from "next-intl";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -15,7 +17,7 @@ export function PaginationDemo({ totalPages }: { totalPages: number }) {
   const { replace } = useRouter();
   const searchParams = useSearchParams();
   const [currentPage, setCurrentPage] = useState(1);
-
+  const locale = useLocale();
   useEffect(() => {
     const page = parseInt(searchParams.get("page") || "1", 10);
     setCurrentPage(page);
@@ -29,8 +31,8 @@ export function PaginationDemo({ totalPages }: { totalPages: number }) {
     setCurrentPage(page);
   };
   return (
-    <Pagination className=" mt-5 col-span-full">
-      <PaginationContent>
+    <Pagination className="mt-5 col-span-full">
+      <PaginationContent className={cn("flex items-center", locale === "ar" ? "flex-row-reverse" : "flex-row")}>
         <PaginationItem>
           <PaginationPrevious
             href="#"

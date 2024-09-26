@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     siteName: "Resala",
     images: [
       {
-        url: "https://www.resala-courses.com/images/og-image.jpg", // Replace with your image
+        url: "https://www.resala-courses.com/images/og-image.jpg",
         width: 1200,
         height: 630,
         alt: "Resala Training Courses",

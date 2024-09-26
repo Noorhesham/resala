@@ -1,4 +1,4 @@
-import { getEntities, getEntity } from "@/app/actions/actions";
+import { getCourses, getEntities, getEntity } from "@/app/actions/actions";
 import SliderCards from "@/app/components/CardsSlider";
 import CertificateVerify from "@/app/components/CertificateVerify";
 import MaxWidthWrapper from "@/app/components/defaults/MaxWidthWrapper";
@@ -7,7 +7,15 @@ import FormSend from "@/app/components/FormSend";
 import ImageSlider from "@/app/components/ImageSlider";
 import { getTranslations } from "next-intl/server";
 import React from "react";
-
+export const generateStaticParams = async () => {
+  const { data } = await getEntities("Course", 1, {}, true);
+  
+  // Return an array of objects containing the parameters for each route
+  return data?.data?.map((course) => ({
+    locale: "en",  // replace with dynamic locales if necessary
+    id: course._id.toString()
+  })) || [];
+};
 const Page = async ({ params: { locale, id } }: { params: { locale: string; id: string } }) => {
   const t = await getTranslations({ locale });
   const { data, error } = await getEntity("Course", id, locale);

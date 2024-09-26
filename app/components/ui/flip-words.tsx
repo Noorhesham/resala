@@ -7,10 +7,12 @@ export const FlipWords = ({
   words,
   duration = 3000,
   className,
+  arabic,
 }: {
   words: string[];
   duration?: number;
   className?: string;
+  arabic?: boolean;
 }) => {
   const [currentWord, setCurrentWord] = useState(words[0]); // initial word of the first word in the arr i recieve
   const [isAnimating, setIsAnimating] = useState<boolean>(false); // i make a state to know when i animate
@@ -61,7 +63,10 @@ export const FlipWords = ({
           scale: 1.5,
           position: "absolute",
         }}
-        className={cn("z-10 inline-block top-32 absolute text-left  text-sky-400 dark:text-neutral-100 px-2", className)}
+        className={cn(
+          "z-10 inline-block top-32 absolute text-left  text-sky-400 dark:text-neutral-100 px-2",
+          className
+        )}
         key={currentWord}
       >
         {currentWord.split(" ").map((word, wordIndex) => (
@@ -75,20 +80,22 @@ export const FlipWords = ({
             }}
             className="inline-block whitespace-nowrap"
           >
-            {word.split("").map((letter, letterIndex) => (
-              <motion.span
-                key={word + letterIndex}
-                initial={{ opacity: 0, y: 10, filter: "blur(8px)" }}
-                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                transition={{
-                  delay: wordIndex * 0.3 + letterIndex * 0.05,
-                  duration: 0.2,
-                }}
-                className="inline-block"
-              >
-                {letter}
-              </motion.span>
-            ))}
+            {arabic
+              ? word
+              : word.split("").map((letter, letterIndex) => (
+                  <motion.span
+                    key={word + letterIndex}
+                    initial={{ opacity: 0, y: 10, filter: "blur(8px)" }}
+                    animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                    transition={{
+                      delay: wordIndex * 0.3 + letterIndex * 0.05,
+                      duration: 0.2,
+                    }}
+                    className="inline-block"
+                  >
+                    {letter}
+                  </motion.span>
+                ))}
             <span className="inline-block">&nbsp;</span>
           </motion.span>
         ))}

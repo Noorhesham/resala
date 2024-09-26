@@ -13,7 +13,7 @@ const fetchProducts = async (page = 1, filter = "", locale = "en") => {
 };
 
 const cachedFetchProducts = (page: number, filter: any, locale?: string) =>
-  unstable_cache(() => fetchProducts(page, filter, locale), [`products-${page}-${JSON.stringify(filter)}-${locale}`], {
+  unstable_cache(() => fetchProducts(page, filter, locale), [`course-${page}-${JSON.stringify(filter)}-${locale}`], {
     revalidate: 1,
   });
 
@@ -37,7 +37,7 @@ const ProductReelFetch = async ({
   const courses = data;
   console.log(courses);
   return (
-    <MaxWidthWrapper className="flex flex-col items-center gap-5">
+    <MaxWidthWrapper id="courses" className="flex flex-col items-center gap-5">
       <h1 className="text-6xl font-bold text-center blue_gradient mb-2">Courses</h1>
       <ToolBox />
       <GridContainer cols={3}>

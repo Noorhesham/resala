@@ -19,7 +19,7 @@
     "word3": "Share Your Knowledge",
     "word4": "Success Stories",
     "browseCourses": "Browse Courses",
-    "description": "Spotlight effect is a great way to draw attention to a specific part of the page. Here, we are drawing the attention towards the text section of the page. I don't know why but I'm running out of copy."
+    "description": "At Resala, we believe that education is a lifelong journey. Our carefully crafted courses are designed to provide you with hands-on experience, practical knowledge, and the skills necessary to stand out in today's competitive world. Whether you’re looking to boost your career, change your profession, or simply explore something new, we have the right course for you."
   },
   "certificate": {
     "enterCode": "Enter Certificate Code:",
@@ -57,5 +57,34 @@
     "fresh": "Fresh Graduate",
     "mad": "Mad Developer",
     "copyright": "© 2024 by Noor Hesham"
+  },
+  "Categories": {
+    "header": {
+      "course": "Our Course",
+      "title": "Explore Our Categories",
+      "description": "Discover a range of courses designed to help you master new skills, from programming to business."
+    },
+    "categories": {
+      "programming": {
+        "title": "Programming",
+        "desc": "Delve into the world of coding with hands-on programming courses."
+      },
+      "language": {
+        "title": "Language",
+        "desc": "Learn new languages from the comfort of your home."
+      },
+      "accounting": {
+        "title": "Accounting",
+        "desc": "Master the art of financial management and accounting principles."
+      },
+      "business": {
+        "title": "Business",
+        "desc": "Enhance your skills in leadership and team management."
+      }
+    },
+    "footer": {
+      "joinNow": "Join Us Now",
+      "description": "Start your journey towards mastering new skills today!"
+    }
   }
 }

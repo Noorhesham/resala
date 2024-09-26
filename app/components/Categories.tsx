@@ -4,10 +4,13 @@ import GridContainer from "./defaults/GridContainer";
 import Paragraph from "./defaults/Paragraph";
 import Image from "next/image";
 import MaxWidthWrapper from "./MaxWidthWrapper";
-import { FaCode, FaCalculator, FaUserTie } from "react-icons/fa"; // Import icons
+import { FaCode, FaLanguage, FaCalculator, FaUserTie } from "react-icons/fa"; // Import icons
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl"; // Import NextIntl for translations
 
 const Categories = () => {
+  const t = useTranslations("Categories"); // Using translation for "Categories" namespace
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -37,35 +40,37 @@ const Categories = () => {
         <div className="flex col-span-2 flex-col mb-8">
           <span className="text-indigo-600 font-semibold text-base flex items-center mb-2">
             <FaCode className="mr-2" /> {/* Icon before span */}
-            Our Course
+            {t("header.course")} {/* Dynamic translation for "Our Course" */}
           </span>
-          <h1 className="text-5xl font-bold blue_gradient mb-4">Explore Our Categories</h1>
-          <Paragraph
-            className="font-semibold max-w-lg text-gray-700"
-            description="Lorem ipsum dolor sit amet consectetur adipiscing elit. Curabitur ac pharetra dui."
-          />
+          <h1 className="text-5xl font-bold blue_gradient mb-4">{t("header.title")}</h1>
+          <Paragraph className="font-semibold max-w-lg text-gray-700" description={t("header.description")} />
         </div>
 
         {/* Category Items with Motion */}
         {[
-          { title: "Programming", image: "/happy-man-online-dating-via-laptop.png", bgColor: "bg-purple-400" },
           {
-            title: "Language",
+            title: t("categories.programming.title"),
+            image: "/happy-man-online-dating-via-laptop.png",
+            bgColor: "bg-purple-400",
+            desc: t("categories.programming.desc"),
+          },
+          {
+            title: t("categories.language.title"),
             image: "/lang.png",
             bgColor: "bg-orange-400",
-            desc: "Learn new languages from the comfort of your home.",
+            desc: t("categories.language.desc"),
           },
           {
-            title: "Accounting",
+            title: t("categories.accounting.title"),
             image: "/accounting.png",
             bgColor: "bg-sky-400",
-            desc: "Master the art of financial management and accounting principles.",
+            desc: t("categories.accounting.desc"),
           },
           {
-            title: "Business",
+            title: t("categories.business.title"),
             image: "/business.png",
             bgColor: "bg-pink-400",
-            desc: "Enhance your skills in leadership and team management",
+            desc: t("categories.business.desc"),
           },
         ].map((category, index) => (
           <motion.div key={index} className="px-4 py-2" variants={itemVariants}>
@@ -86,7 +91,6 @@ const Categories = () => {
           <div
             style={{
               width: "100%",
-
               backgroundImage: "url('/course.avif')",
               backgroundSize: "cover",
               backgroundPosition: "center",
@@ -96,9 +100,9 @@ const Categories = () => {
           ></div>
           <div>
             <h2 className="text-base w-full text-center self-center font-semibold mx-auto mt-4 flex items-center">
-              Join Us Now
+              {t("footer.joinNow")}
             </h2>
-            <Paragraph description="Lorem ipsum dolor sit amet consectetur adipiscing elit." />
+            <Paragraph description={t("footer.description")} />
           </div>
         </motion.div>
       </motion.div>

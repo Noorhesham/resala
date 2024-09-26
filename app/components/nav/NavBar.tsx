@@ -15,10 +15,6 @@ const links = [
     text: "Home",
     href: "/",
   },
-  {
-    text: "Courses",
-    href: "/courses",
-  },
 ];
 const NavBar = () => {
   const [isScrollingDown, setIsScrollingDown] = useState(false);

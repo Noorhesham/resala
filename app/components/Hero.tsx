@@ -25,7 +25,7 @@ const Hero = async () => {
       <div className="absolute lg:block hidden top-1/2 right-10">
         <CircularText />
       </div>
-      <a href="#courses" className="left-[55%] z-40 top-[65%] absolute flex items-center gap-2">
+      <a href="#courses" className="left-[55%] hidden lg:flex  z-40 top-[65%] absolute items-center gap-2">
         <div className="w-20 relative h-20">
           <Image src="/4762311.png" className="object-cover" fill alt="arrow" />
         </div>

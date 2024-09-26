@@ -82,32 +82,9 @@ export default async function RootLayout({
   const selectedFont = isArabic ? cairoFont.variable : robotoFont.variable;
   return (
     <html lang={locale}>
-      {" "}
-      <head>
-        <meta
-          name="description"
-          content="Discover the best training courses for in-depth learning, skill development, and success stories."
-        />
-        <meta property="og:title" content="Resala - Training Courses" />
-        <meta
-          property="og:description"
-          content="Discover the best training courses for in-depth learning, skill development, and success stories."
-        />
-        <meta property="og:image" content="https://www.resala-courses.com/images/og-image.jpg" />
-        <meta property="og:url" content="https://www.resala-courses.com" />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Resala - Training Courses" />
-        <meta
-          name="twitter:description"
-          content="Discover the best training courses for in-depth learning, skill development, and success stories."
-        />
-        <meta name="twitter:image" content="https://www.resala-courses.com/images/og-image.jpg" />
-
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(generateJSONLD()) }} />
-      </head>
       <body
         style={{ textAlign: locale === "ar" ? "right" : "left", direction: locale === "ar" ? "rtl" : "ltr" }}
-        className={isArabic ? "font-cairo" : "font-roboto"}
+        className={selectedFont}
       >
         <QueryProvider>
           <ToastContainer

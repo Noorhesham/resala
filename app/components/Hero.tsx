@@ -8,10 +8,11 @@ import MotionItem from "./defaults/MotionItem";
 import { ChevronDown } from "lucide-react";
 import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 
-const Hero = () => {
-  const t = useTranslations("hero");
-  const locale = useLocale();
+const Hero = async () => {
+  const t = await getTranslations("hero");
+
   // Fetch each word separately
   const words = [t("word1"), t("word2"), t("word3"), t("word4")];
 
@@ -42,11 +43,13 @@ const Hero = () => {
       <MaxWidthWrapper className="head_text h-64 relative overflow-hidden items-center flex flex-col blue_gradient">
         <h1>{t("title")}</h1>
 
-        <FlipWords arabic={locale === "ar"} className="" words={words} duration={1500} />
+        <FlipWords className="" words={words} duration={1500} />
       </MaxWidthWrapper>
       <MaxWidthWrapper noPadding className="-mt-10 relative">
         <MotionItem initial={{ opacity: 0, y: 100 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-          <p className="mt-4 text-base text-blue-800 font-semibold max-w-lg text-center mx-auto">{t("description")}</p>
+          <div className="mt-4 text-base text-blue-800 font-semibold max-w-lg text-center mx-auto">
+            {t("description")}
+          </div>
         </MotionItem>
         <div className="h-[28rem] absolute xl:-left-96 top-24 xl:-top-8 w-full">
           <Image src="/study.png" fill alt="study" className="object-contain" />

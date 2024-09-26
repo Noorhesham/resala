@@ -2,21 +2,20 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, LayoutGroup } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { useLocale } from "next-intl";
 
 export const FlipWords = ({
   words,
   duration = 3000,
   className,
-  arabic,
 }: {
   words: string[];
   duration?: number;
   className?: string;
-  arabic?: boolean;
 }) => {
   const [currentWord, setCurrentWord] = useState(words[0]); // initial word of the first word in the arr i recieve
   const [isAnimating, setIsAnimating] = useState<boolean>(false); // i make a state to know when i animate
-
+  const arabic = useLocale() === "ar";
   // a callback function to not be initialized everytime preventing it from being recreated on every render
   const startAnimation = useCallback(() => {
     // increase the current word || use the first word then setting it to current state and animate status

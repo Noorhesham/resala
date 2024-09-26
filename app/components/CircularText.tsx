@@ -16,7 +16,7 @@ const CircularText = () => {
           <path id="circlePath" d="M 100, 100 m -75, 0 a 75,75 0 1,1 150,0 a 75,75 0 1,1 -150,0"></path>
         </defs>
         <text>
-          <textPath href="#circlePath" startOffset="50%" text-anchor="middle">
+          <textPath href="#circlePath" startOffset="50%" textAnchor="middle">
             ENHANCE YOUR KNOWLEDGE and Boost your skills with our diverse courses
           </textPath>
         </text>
